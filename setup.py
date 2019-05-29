@@ -125,8 +125,6 @@ class PCTBuildExt (build_ext):
             self.__remove_compiler_option("-DNDEBUG")
 
             # Choose our own optimization options
-            for opt in ["-O", "-O0", "-O1", "-O2", "-O3", "-Os"]:
-                self.__remove_compiler_option(opt)
             if self.debug:
                 # Basic optimization is still needed when debugging to compile
                 # the libtomcrypt code.
@@ -134,10 +132,7 @@ class PCTBuildExt (build_ext):
             else:
                 # Speed up execution by tweaking compiler options.  This
                 # especially helps the DES modules.
-                self.__add_compiler_option("-O3")
                 self.__add_compiler_option("-fomit-frame-pointer")
-                # Don't include debug symbols unless debugging
-                self.__remove_compiler_option("-g")
                 # Don't include profiling information (incompatible with
                 # -fomit-frame-pointer)
                 self.__remove_compiler_option("-pg")

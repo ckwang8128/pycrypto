@@ -1109,7 +1109,7 @@ cleanup:
 
 
 
-INLINE size_t size (mpz_t n)
+static INLINE size_t size (mpz_t n)
 {
 	return mpz_sizeinbase (n, 2);
 }

@@ -170,6 +170,17 @@ ALGnew(PyObject *self, PyObject *args, PyObject *kwdict)
 				"Key cannot be the null string");
 		return NULL;
 	}
+	if (IVlen != 0 && mode == MODE_ECB)
+	{
+		PyErr_WarnEx(PyExc_FutureWarning, "ECB mode does not use IV", 1);
+		IVlen = 0;
+	}
+	if (IVlen != 0 && mode == MODE_CTR)
+	{
+		PyErr_WarnEx(PyExc_FutureWarning,
+			"CTR mode needs counter parameter, not IV", 1);
+		IVlen = 0;
+	}
 	if (IVlen != BLOCK_SIZE && mode != MODE_ECB && mode != MODE_CTR)
 	{
 		PyErr_Format(PyExc_ValueError,
